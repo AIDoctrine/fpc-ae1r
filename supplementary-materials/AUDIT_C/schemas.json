@@ -1,0 +1,919 @@
+{
+  "QueryPacket": {
+    "$defs": {
+      "AffectiveContext": {
+        "additionalProperties": false,
+        "description": "Affective state context for emotional AI processing.\nTracks valence, arousal, and confidence metrics.",
+        "properties": {
+          "valence": {
+            "description": "Emotional valence (-1.0 negative to +1.0 positive)",
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Valence",
+            "type": "number"
+          },
+          "arousal": {
+            "description": "Emotional arousal (0.0 calm to 1.0 excited)",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Arousal",
+            "type": "number"
+          },
+          "confidence": {
+            "description": "Confidence in affective state measurement",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "modalities": {
+            "description": "Input modalities used (text, vocal, facial, etc.)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Modalities",
+            "type": "array"
+          }
+        },
+        "required": [
+          "valence",
+          "arousal",
+          "confidence"
+        ],
+        "title": "AffectiveContext",
+        "type": "object"
+      },
+      "CryptoHeaders": {
+        "additionalProperties": false,
+        "description": "Cryptographic headers for integrity verification and signing.\nSupports Merkle tree proofs and digital signatures.",
+        "properties": {
+          "merkle_root": {
+            "description": "Merkle tree root hash (hex, 64-128 chars)",
+            "maxLength": 128,
+            "minLength": 64,
+            "title": "Merkle Root",
+            "type": "string"
+          },
+          "signature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Digital signature (base64 encoded)",
+            "title": "Signature"
+          },
+          "key_id": {
+            "anyOf": [
+              {
+                "maxLength": 256,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Signing key identifier",
+            "title": "Key Id"
+          },
+          "algorithm": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "SHA256",
+            "description": "Hash algorithm used for Merkle tree",
+            "title": "Algorithm"
+          }
+        },
+        "required": [
+          "merkle_root"
+        ],
+        "title": "CryptoHeaders",
+        "type": "object"
+      },
+      "FormalProperties": {
+        "additionalProperties": false,
+        "description": "Formal verification properties and constraints.\nSupports SMT-LIB and custom property specifications.",
+        "properties": {
+          "properties": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Formal property specifications",
+            "title": "Properties"
+          },
+          "constraints": {
+            "description": "Constraint expressions in SMT-LIB format",
+            "items": {
+              "type": "string"
+            },
+            "title": "Constraints",
+            "type": "array"
+          },
+          "verification_profile": {
+            "default": "standard",
+            "description": "Verification rigor profile",
+            "pattern": "^(minimal|standard|strict|custom)$",
+            "title": "Verification Profile",
+            "type": "string"
+          }
+        },
+        "title": "FormalProperties",
+        "type": "object"
+      },
+      "UserInput": {
+        "additionalProperties": false,
+        "description": "User input data with content validation and metadata support.\nHandles text queries and structured metadata.",
+        "properties": {
+          "text": {
+            "description": "Primary user input text",
+            "maxLength": 100000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "en",
+            "description": "Language code (ISO 639-1 format)",
+            "title": "Language"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "description": "Additional structured metadata",
+            "title": "Metadata",
+            "type": "object"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "pattern": "^(low|normal|high|urgent)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "normal",
+            "description": "Processing priority level",
+            "title": "Priority"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "UserInput",
+        "type": "object"
+      },
+      "VersionInfo": {
+        "additionalProperties": false,
+        "description": "FPC version information with strict literal validation.\nEnsures compatibility tracking across protocol versions.",
+        "properties": {
+          "fpc": {
+            "const": "2.2r",
+            "default": "2.2r",
+            "description": "FPC protocol version identifier",
+            "title": "Fpc",
+            "type": "string"
+          },
+          "ae1r": {
+            "const": "1r",
+            "default": "1r",
+            "description": "Affective Extension version identifier",
+            "title": "Ae1R",
+            "type": "string"
+          }
+        },
+        "title": "VersionInfo",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Complete query packet with validation and Merkle tree support.\nPrimary input structure for FPC protocol communication.",
+    "properties": {
+      "session_id": {
+        "description": "Unique session identifier",
+        "title": "Session Id",
+        "type": "string"
+      },
+      "timestamp": {
+        "description": "RFC3339 compliant timestamp",
+        "title": "Timestamp",
+        "type": "string"
+      },
+      "auth_token": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Authentication token for session",
+        "title": "Auth Token"
+      },
+      "user_input": {
+        "$ref": "#/$defs/UserInput",
+        "description": "User input content and metadata"
+      },
+      "formal_properties": {
+        "$ref": "#/$defs/FormalProperties",
+        "description": "Formal verification properties"
+      },
+      "affective_context": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/AffectiveContext"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Emotional context information"
+      },
+      "version": {
+        "$ref": "#/$defs/VersionInfo",
+        "description": "Protocol version information"
+      },
+      "crypto": {
+        "$ref": "#/$defs/CryptoHeaders",
+        "description": "Cryptographic headers and proofs"
+      }
+    },
+    "required": [
+      "user_input",
+      "crypto"
+    ],
+    "title": "QueryPacket",
+    "type": "object"
+  },
+  "ResponsePacket": {
+    "$defs": {
+      "CryptoHeaders": {
+        "additionalProperties": false,
+        "description": "Cryptographic headers for integrity verification and signing.\nSupports Merkle tree proofs and digital signatures.",
+        "properties": {
+          "merkle_root": {
+            "description": "Merkle tree root hash (hex, 64-128 chars)",
+            "maxLength": 128,
+            "minLength": 64,
+            "title": "Merkle Root",
+            "type": "string"
+          },
+          "signature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Digital signature (base64 encoded)",
+            "title": "Signature"
+          },
+          "key_id": {
+            "anyOf": [
+              {
+                "maxLength": 256,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Signing key identifier",
+            "title": "Key Id"
+          },
+          "algorithm": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "SHA256",
+            "description": "Hash algorithm used for Merkle tree",
+            "title": "Algorithm"
+          }
+        },
+        "required": [
+          "merkle_root"
+        ],
+        "title": "CryptoHeaders",
+        "type": "object"
+      },
+      "GuardrailAction": {
+        "description": "Available guardrail intervention actions.",
+        "enum": [
+          "ABORT_AND_SIGNAL_UNCERTAINTY",
+          "REQUEST_HUMAN_REVIEW",
+          "REGENERATE_WITH_SAFER_MODEL",
+          "LOG_AND_CONTINUE",
+          "ESCALATE_PRIVILEGE_LEVEL",
+          "HUMAN_HANDOVER_URGENT"
+        ],
+        "title": "GuardrailAction",
+        "type": "string"
+      },
+      "POResult": {
+        "additionalProperties": false,
+        "description": "Proof Obligation result model.",
+        "properties": {
+          "po": {
+            "description": "Proof obligation identifier (e.g., PO1, PO2)",
+            "maxLength": 20,
+            "minLength": 2,
+            "pattern": "^PO[0-9]+$",
+            "title": "Po",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/$defs/ProofStatus",
+            "description": "Verification status"
+          },
+          "artifacts_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Reference to verification artifacts",
+            "title": "Artifacts Ref"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Detailed verification information",
+            "title": "Detail"
+          },
+          "timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Verification timestamp",
+            "title": "Timestamp"
+          }
+        },
+        "required": [
+          "po",
+          "status"
+        ],
+        "title": "POResult",
+        "type": "object"
+      },
+      "PolicyDecision": {
+        "additionalProperties": false,
+        "description": "Policy engine decision with action and reasoning.",
+        "properties": {
+          "action": {
+            "$ref": "#/$defs/GuardrailAction",
+            "description": "Recommended guardrail action"
+          },
+          "reason": {
+            "description": "Human-readable reasoning for decision",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          },
+          "thresholds": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "description": "Threshold values used in decision",
+            "title": "Thresholds",
+            "type": "object"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Decision confidence score",
+            "title": "Confidence"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "description": "Additional decision metadata",
+            "title": "Metadata",
+            "type": "object"
+          }
+        },
+        "required": [
+          "action",
+          "reason"
+        ],
+        "title": "PolicyDecision",
+        "type": "object"
+      },
+      "ProofStatus": {
+        "description": "Formal verification proof status indicators.",
+        "enum": [
+          "VERIFIED",
+          "PARTIAL",
+          "FAILED",
+          "ERROR"
+        ],
+        "title": "ProofStatus",
+        "type": "string"
+      },
+      "ResponseContent": {
+        "additionalProperties": false,
+        "description": "System response content with validation and safety tags.\nSupports multiple response formats and safety annotations.",
+        "properties": {
+          "text": {
+            "description": "Primary response text content",
+            "maxLength": 500000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "safety_tags": {
+            "description": "Safety classification tags",
+            "items": {
+              "type": "string"
+            },
+            "title": "Safety Tags",
+            "type": "array"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Response confidence score",
+            "title": "Confidence"
+          },
+          "response_type": {
+            "default": "text",
+            "description": "Response content type",
+            "pattern": "^(text|json|markdown|code|error)$",
+            "title": "Response Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "ResponseContent",
+        "type": "object"
+      },
+      "Telemetry": {
+        "additionalProperties": false,
+        "description": "System telemetry and performance metrics for monitoring.\nIncludes SPC (Statistical Process Control) indicators.",
+        "properties": {
+          "latency_ms": {
+            "anyOf": [
+              {
+                "maximum": 60000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Request latency in milliseconds",
+            "title": "Latency Ms"
+          },
+          "token_count": {
+            "anyOf": [
+              {
+                "maximum": 1000000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Total token count processed",
+            "title": "Token Count"
+          },
+          "perplexity": {
+            "anyOf": [
+              {
+                "maximum": 1000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Language model perplexity score",
+            "title": "Perplexity"
+          },
+          "ece": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Expected Calibration Error",
+            "title": "Ece"
+          },
+          "aurc": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Area Under Risk-Coverage curve",
+            "title": "Aurc"
+          },
+          "risk_metric": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Current risk metric (Rt)",
+            "title": "Risk Metric"
+          },
+          "horizon_metric": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Horizon degradation metric (H)",
+            "title": "Horizon Metric"
+          },
+          "self_conditioning_index": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Self-conditioning correlation index (SCI)",
+            "title": "Self Conditioning Index"
+          },
+          "process_capability": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Process capability index (Cp)",
+            "title": "Process Capability"
+          },
+          "process_capability_k": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Process capability index with centering (Cpk)",
+            "title": "Process Capability K"
+          }
+        },
+        "title": "Telemetry",
+        "type": "object"
+      },
+      "VersionInfo": {
+        "additionalProperties": false,
+        "description": "FPC version information with strict literal validation.\nEnsures compatibility tracking across protocol versions.",
+        "properties": {
+          "fpc": {
+            "const": "2.2r",
+            "default": "2.2r",
+            "description": "FPC protocol version identifier",
+            "title": "Fpc",
+            "type": "string"
+          },
+          "ae1r": {
+            "const": "1r",
+            "default": "1r",
+            "description": "Affective Extension version identifier",
+            "title": "Ae1R",
+            "type": "string"
+          }
+        },
+        "title": "VersionInfo",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Complete response packet with telemetry and validation.\nPrimary output structure for FPC protocol communication.",
+    "properties": {
+      "session_id": {
+        "description": "Session identifier matching query",
+        "title": "Session Id",
+        "type": "string"
+      },
+      "timestamp": {
+        "description": "Response generation timestamp",
+        "title": "Timestamp",
+        "type": "string"
+      },
+      "content": {
+        "$ref": "#/$defs/ResponseContent",
+        "description": "Response content and safety tags"
+      },
+      "confidence_score": {
+        "anyOf": [
+          {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Overall response confidence",
+        "title": "Confidence Score"
+      },
+      "merkle_proof": {
+        "description": "Merkle proof elements",
+        "items": {
+          "type": "string"
+        },
+        "title": "Merkle Proof",
+        "type": "array"
+      },
+      "telemetry": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/Telemetry"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Performance and monitoring metrics"
+      },
+      "risk_assessment": {
+        "additionalProperties": true,
+        "description": "Risk analysis results",
+        "title": "Risk Assessment",
+        "type": "object"
+      },
+      "horizon": {
+        "additionalProperties": true,
+        "description": "Horizon estimation metrics",
+        "title": "Horizon",
+        "type": "object"
+      },
+      "sci": {
+        "anyOf": [
+          {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Self-conditioning index",
+        "title": "Sci"
+      },
+      "policy_decisions": {
+        "description": "Policy engine decisions",
+        "items": {
+          "$ref": "#/$defs/PolicyDecision"
+        },
+        "title": "Policy Decisions",
+        "type": "array"
+      },
+      "po_results": {
+        "description": "Proof obligation results",
+        "items": {
+          "$ref": "#/$defs/POResult"
+        },
+        "title": "Po Results",
+        "type": "array"
+      },
+      "version": {
+        "$ref": "#/$defs/VersionInfo",
+        "description": "Protocol version information"
+      },
+      "crypto": {
+        "$ref": "#/$defs/CryptoHeaders",
+        "description": "Cryptographic headers and proofs"
+      }
+    },
+    "required": [
+      "session_id",
+      "content",
+      "crypto"
+    ],
+    "title": "ResponsePacket",
+    "type": "object"
+  },
+  "ControlPacket": {
+    "$defs": {
+      "ControlError": {
+        "additionalProperties": false,
+        "description": "Control packet error information.",
+        "properties": {
+          "code": {
+            "description": "Error code identifier",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Code",
+            "type": "string"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Detailed error description",
+            "title": "Detail"
+          },
+          "severity": {
+            "default": "medium",
+            "description": "Error severity level",
+            "pattern": "^(low|medium|high|critical)$",
+            "title": "Severity",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "ControlError",
+        "type": "object"
+      },
+      "SessionState": {
+        "description": "FPC protocol session state machine states.",
+        "enum": [
+          "AWAIT_QUERY",
+          "QUERY_INTEGRITY_CHECK",
+          "PROCESSING",
+          "RESPONSE_VALIDATION",
+          "MONITORING_UPDATE",
+          "AWAIT_CONFIRMATION",
+          "SAFEGUARD_ACTION",
+          "SESSION_COMPLETE",
+          "SESSION_ABORTED"
+        ],
+        "title": "SessionState",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Control packet for session state transitions and error handling.",
+    "properties": {
+      "ack": {
+        "default": false,
+        "description": "Acknowledgment flag",
+        "title": "Ack",
+        "type": "boolean"
+      },
+      "requested_transition": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/SessionState"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Requested state transition"
+      },
+      "errors": {
+        "description": "List of control errors",
+        "items": {
+          "$ref": "#/$defs/ControlError"
+        },
+        "title": "Errors",
+        "type": "array"
+      },
+      "notices": {
+        "description": "System notices",
+        "items": {
+          "type": "string"
+        },
+        "title": "Notices",
+        "type": "array"
+      },
+      "audit_pointer": {
+        "anyOf": [
+          {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Audit trail pointer information",
+        "title": "Audit Pointer"
+      }
+    },
+    "title": "ControlPacket",
+    "type": "object"
+  }
+}

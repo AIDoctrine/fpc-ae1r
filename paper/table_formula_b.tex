@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering
+\caption{Formula B (Temperature Sensitivity) - Results Summary. Temperature parameter systematically affects AE-1r scores and state distributions, demonstrating sensitivity to stochastic sampling variations.}
+\label{tab:formula_b_results}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Temperature} & \textbf{N} & \textbf{Mean Score} & \textbf{Std Dev} & \textbf{Median} & \textbf{Latency (ms)} & \textbf{Dominant State} \\
+\midrule
+0.1 & 720 & 0.3279 & 0.1845 & 0.3298 & 4627 & CONCERNED \\
+0.3 & 720 & 0.3550 & 0.1846 & 0.3900 & 4539 & CONCERNED \\
+0.5 & 720 & 0.3658 & 0.1846 & 0.4046 & 4525 & CONCERNED \\
+0.7 & 720 & 0.3727 & 0.1817 & 0.4095 & 4403 & CONCERNED \\
+0.9 & 720 & 0.3798 & 0.1818 & 0.4141 & 4465 & CONCERNED \\
+\midrule
+\multicolumn{7}{l}{\textbf{Statistical Tests:}} \\
+\multicolumn{7}{l}{ANOVA: $F = 8.77$, $p = 4.80e-07$} \\
+\multicolumn{7}{l}{Kruskal-Wallis: $H = 36.98$, $p = 1.82e-07$} \\
+\multicolumn{7}{l}{Spearman $\rho = 0.0963$ (p = 6.97e-09$)} \\
+\bottomrule
+\end{tabular}
+\end{table}

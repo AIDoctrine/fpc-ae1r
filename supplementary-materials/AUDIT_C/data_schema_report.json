@@ -1,0 +1,12 @@
+{
+  "errors_count": 0,
+  "errors_sample": [],
+  "path": "/content/FPC/data/clc_questions.jsonl",
+  "required_fields": [
+    "id",
+    "prompt",
+    "complexity_bin"
+  ],
+  "timestamp_utc": "2025-10-10T08:02:04Z",
+  "total_records": 40
+}

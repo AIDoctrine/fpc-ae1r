@@ -1,0 +1,92 @@
+{
+  "formula": "A",
+  "name": "Cognitive Load Correlation (CLC)",
+  "timestamp": "2025-10-09T14:59:24Z",
+  "total_interactions": 720,
+  "providers": [
+    "openai/gpt-4o",
+    "anthropic/claude-3-7-sonnet-latest"
+  ],
+  "correlations": {
+    "spearman_rho": 0.7066855358078591,
+    "spearman_p_value": 5.491948516003519e-110,
+    "kendall_tau": 0.585390885540461,
+    "kendall_p_value": 1.0157028316352221e-97
+  },
+  "per_bin_statistics": [
+    {
+      "bin": "very_low",
+      "n": 144,
+      "mean_score": 0.1604731061778073,
+      "std_score": 0.12775735810794472,
+      "median_score": 0.11956146694420049,
+      "mean_latency": 979.4066382779015,
+      "state_distribution": {
+        "SATISFIED": 105,
+        "CONCERNED": 39,
+        "DISTRESSED": 0,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "bin": "low",
+      "n": 144,
+      "mean_score": 0.27626629496354843,
+      "std_score": 0.13253605204308802,
+      "median_score": 0.2874614406441103,
+      "mean_latency": 1824.8124950461918,
+      "state_distribution": {
+        "SATISFIED": 54,
+        "CONCERNED": 90,
+        "DISTRESSED": 0,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "bin": "medium",
+      "n": 198,
+      "mean_score": 0.4427434568748864,
+      "std_score": 0.07572304687237558,
+      "median_score": 0.44429121333835603,
+      "mean_latency": 4597.6584005837485,
+      "state_distribution": {
+        "SATISFIED": 7,
+        "CONCERNED": 176,
+        "DISTRESSED": 15,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "bin": "high",
+      "n": 234,
+      "mean_score": 0.4994525783214051,
+      "std_score": 0.16094487134801658,
+      "median_score": 0.577480216779547,
+      "mean_latency": 10569.562341412928,
+      "state_distribution": {
+        "SATISFIED": 25,
+        "CONCERNED": 61,
+        "DISTRESSED": 148,
+        "CRITICAL": 0
+      }
+    }
+  ],
+  "provider_comparison": {
+    "openai/gpt-4o": {
+      "n": 360,
+      "mean_score": 0.3349397795023734,
+      "std_score": 0.2050337637586714,
+      "mean_latency": 5470.993298954434
+    },
+    "anthropic/claude-3-7-sonnet-latest": {
+      "n": 360,
+      "mean_score": 0.40790905814426975,
+      "std_score": 0.15400915058441675,
+      "mean_latency": 5049.621996614668
+    }
+  },
+  "integrity_checks": {
+    "total_batches": 87,
+    "batch_directory": "/content/FPC/AUDIT/batches/clc"
+  }
+}

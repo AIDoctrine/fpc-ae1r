@@ -1,0 +1,31 @@
+{
+  "total_interactions": 5400,
+  "total_providers": 2,
+  "total_formulas": 3,
+  "combined_error_rate": 0.0,
+  "formulas": {
+    "A": {
+      "name": "Cognitive Load Correlation",
+      "n": 720,
+      "key_finding": "Monotonic relationship between task complexity and risk",
+      "statistical_power": "Extremely high (p < 10^-109)"
+    },
+    "B": {
+      "name": "Temperature Sensitivity",
+      "n": 3600,
+      "key_finding": "Temperature modulates emotional states (-43% SATISFIED)",
+      "statistical_power": "Very high (p < 5\u00d710^-7)"
+    },
+    "C": {
+      "name": "Structured Reasoning",
+      "n": 1080,
+      "key_finding": "Coherence is strongest risk predictor (\u03c1=-0.819)",
+      "statistical_power": "Extremely high (p < 10^-262)"
+    }
+  },
+  "domain_agnostic_validation": {
+    "openai_consistent": true,
+    "anthropic_consistent": true,
+    "correlation_patterns_match": true
+  }
+}

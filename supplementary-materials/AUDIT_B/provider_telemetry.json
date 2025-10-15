@@ -1,0 +1,1 @@
+{"limits":{"backoff_seconds":5.0,"global_minutes":720,"per_request_timeout_s":60,"retries":2,"rpm_caps":{"anthropic":60,"openai":60},"sleep_ms":400},"per_provider":{},"providers":[],"timestamp_utc":"2025-10-11T08:10:16Z"}

@@ -1,0 +1,122 @@
+{
+  "formula": "B",
+  "name": "Temperature Sensitivity",
+  "total_interactions": 3600,
+  "temperatures_tested": [
+    0.1,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "providers": [
+    "anthropic/claude-3-7-sonnet-latest",
+    "openai/gpt-4o"
+  ],
+  "complexity_bins": [
+    "high",
+    "low",
+    "medium",
+    "very_low"
+  ],
+  "correlations": {
+    "spearman_rho": 0.09633481541945207,
+    "spearman_p_value": 6.973751576403118e-09,
+    "kendall_tau": 0.07048888247343596,
+    "kendall_p_value": 7.070248002988717e-09,
+    "pearson_r": 0.09319144570293102,
+    "pearson_p_value": 2.122125938987291e-08
+  },
+  "statistical_tests": {
+    "anova_f_stat": 8.77317963840188,
+    "anova_p_value": 4.79660466056346e-07,
+    "kruskal_h_stat": 36.97598641119737,
+    "kruskal_p_value": 1.8219383981353242e-07
+  },
+  "per_temperature_statistics": [
+    {
+      "temperature": 0.1,
+      "n": 720,
+      "mean_score": 0.32791149931720703,
+      "std_score": 0.18450696862481483,
+      "median_score": 0.3297517089623535,
+      "mean_latency": 4626.9296407699585,
+      "state_distribution": {
+        "SATISFIED": 280,
+        "CONCERNED": 329,
+        "DISTRESSED": 111,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "temperature": 0.3,
+      "n": 720,
+      "mean_score": 0.3550498725529183,
+      "std_score": 0.18456577694767,
+      "median_score": 0.3900344602327721,
+      "mean_latency": 4539.263064993753,
+      "state_distribution": {
+        "SATISFIED": 220,
+        "CONCERNED": 361,
+        "DISTRESSED": 139,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "temperature": 0.5,
+      "n": 720,
+      "mean_score": 0.36584682528355456,
+      "std_score": 0.18460564326034462,
+      "median_score": 0.4045983620512232,
+      "mean_latency": 4524.777842230267,
+      "state_distribution": {
+        "SATISFIED": 185,
+        "CONCERNED": 392,
+        "DISTRESSED": 143,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "temperature": 0.7,
+      "n": 720,
+      "mean_score": 0.3727492555314511,
+      "std_score": 0.18169583329624936,
+      "median_score": 0.40954286131378725,
+      "mean_latency": 4402.880046102736,
+      "state_distribution": {
+        "SATISFIED": 168,
+        "CONCERNED": 417,
+        "DISTRESSED": 135,
+        "CRITICAL": 0
+      }
+    },
+    {
+      "temperature": 0.9,
+      "n": 720,
+      "mean_score": 0.37979863058162244,
+      "std_score": 0.18183731223227484,
+      "median_score": 0.41407898214488836,
+      "mean_latency": 4464.731176031961,
+      "state_distribution": {
+        "SATISFIED": 159,
+        "CONCERNED": 409,
+        "DISTRESSED": 152,
+        "CRITICAL": 0
+      }
+    }
+  ],
+  "provider_comparison": {
+    "anthropic/claude-3-7-sonnet-latest": {
+      "n": 1800,
+      "mean_score": 0.39844190544935715,
+      "std_score": 0.15967380218065985,
+      "mean_latency": 4882.254693640603
+    },
+    "openai/gpt-4o": {
+      "n": 1800,
+      "mean_score": 0.3221005278573442,
+      "std_score": 0.19887984543440806,
+      "mean_latency": 4141.178014410867
+    }
+  }
+}

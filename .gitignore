@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+build/
+dist/
+*.egg-info/
+
+# Virtual Environments
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Secrets
+.env
+*_api_key.txt
+
+# FPC outputs
+FPC_OUTPUT/
+AUDIT/
+CONFIGS/
+*.sha256
+*.hmac
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz

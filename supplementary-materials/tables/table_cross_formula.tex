@@ -1,0 +1,28 @@
+\begin{table}[H]
+\centering
+\caption{Cross-Formula Comparison Summary. All three formulas demonstrate domain-agnostic applicability across two major LLM providers with zero error rates and strong statistical significance.}
+\label{tab:cross_formula_comparison}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Formula A} & \textbf{Formula B} & \textbf{Formula C} \\
+ & \textbf{(Cognitive Load)} & \textbf{(Temperature)} & \textbf{(Reasoning)} \\
+\midrule
+\textbf{Interactions (N)} & 720 & 3,600 & 1,080 \\
+\textbf{Primary Variable} & Task Complexity & Temperature & Task Family \\
+\textbf{Levels Tested} & 4 bins & 5 values & 10 families \\
+\textbf{Key Correlation} & $\rho = 0.707$ & $F = 8.77$ & $\rho = -0.819$ \\
+\textbf{Statistical Test} & Spearman & ANOVA & Spearman \\
+\textbf{p-value} & $< 10^{-109}$ & $< 5 \times 10^{-7}$ & $< 10^{-262}$ \\
+\textbf{Key Finding} & Monotonic & SATISFIED $\downarrow$43\% & Coherence \\
+ & load $\rightarrow$ risk & (T: 0.1 $\rightarrow$ 0.9) & predicts risk \\
+\textbf{Providers} & 2 & 2 & 2 \\
+\textbf{Error Rate} & 0\% & 0\% & 0\% \\
+\midrule
+\multicolumn{4}{l}{\textbf{Combined Statistics:}} \\
+\multicolumn{4}{l}{Total interactions: 5,400 across all formulas} \\
+\multicolumn{4}{l}{Domain-agnostic validation: Both OpenAI and Anthropic show consistent patterns} \\
+\multicolumn{4}{l}{ALCOA+ compliance: 100\% (all formulas pass PO1-PO10)} \\
+\bottomrule
+\end{tabular}
+\end{table}

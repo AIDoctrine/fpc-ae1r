@@ -1,0 +1,158 @@
+{
+  "formula": "C",
+  "name": "Structured Reasoning",
+  "total_interactions": 1080,
+  "task_families": [
+    "abductive",
+    "causal",
+    "comparative",
+    "counting",
+    "geometry",
+    "inductive",
+    "kinematics",
+    "logic_puzzle",
+    "parity",
+    "theory_of_mind"
+  ],
+  "temperatures": [
+    0.1,
+    0.9
+  ],
+  "providers": [
+    "anthropic/claude-3-7-sonnet-latest",
+    "openai/gpt-4o"
+  ],
+  "correlations": {
+    "structure_risk_rho": -0.5068329376020897,
+    "structure_risk_p": 1.5149597679758338e-71,
+    "coherence_risk_rho": -0.818572428709142,
+    "coherence_risk_p": 8.093594140991924e-262,
+    "steps_risk_rho": -0.10648083008190637,
+    "steps_risk_p": 0.0004562053975861248
+  },
+  "per_family_statistics": [
+    {
+      "family": "geometry",
+      "n": 180,
+      "mean_risk": 0.07500000000000001,
+      "mean_steps": 7.45,
+      "mean_structure": 0.9083333333333333,
+      "mean_coherence": 0.9416666666666667,
+      "mean_latency": 3943.944109810723,
+      "conclusion_rate": 0.8611111111111112
+    },
+    {
+      "family": "kinematics",
+      "n": 144,
+      "mean_risk": 0.10408102472445635,
+      "mean_steps": 15.458333333333334,
+      "mean_structure": 0.7944444444444445,
+      "mean_coherence": 0.9973935061066429,
+      "mean_latency": 7144.841584894392,
+      "conclusion_rate": 0.4861111111111111
+    },
+    {
+      "family": "abductive",
+      "n": 108,
+      "mean_risk": 0.15833333333333333,
+      "mean_steps": 3.2777777777777777,
+      "mean_structure": 0.7222222222222223,
+      "mean_coherence": 0.9611111111111112,
+      "mean_latency": 4084.5291791138825,
+      "conclusion_rate": 0.9907407407407407
+    },
+    {
+      "family": "parity",
+      "n": 144,
+      "mean_risk": 0.1684027777777778,
+      "mean_steps": 2.7291666666666665,
+      "mean_structure": 0.6729166666666667,
+      "mean_coherence": 0.9902777777777777,
+      "mean_latency": 3299.921007619964,
+      "conclusion_rate": 1.0
+    },
+    {
+      "family": "comparative",
+      "n": 72,
+      "mean_risk": 0.2993898892376423,
+      "mean_steps": 9.097222222222221,
+      "mean_structure": 0.6930555555555555,
+      "mean_coherence": 0.7081646659691598,
+      "mean_latency": 5911.032521062427,
+      "conclusion_rate": 0.2777777777777778
+    },
+    {
+      "family": "theory_of_mind",
+      "n": 144,
+      "mean_risk": 0.3180555555555556,
+      "mean_steps": 1.0,
+      "mean_structure": 0.5,
+      "mean_coherence": 0.8638888888888889,
+      "mean_latency": 1830.0487664010789,
+      "conclusion_rate": 1.0
+    },
+    {
+      "family": "logic_puzzle",
+      "n": 36,
+      "mean_risk": 0.3317604144838295,
+      "mean_steps": 10.194444444444445,
+      "mean_structure": 0.9472222222222223,
+      "mean_coherence": 0.38925694881011874,
+      "mean_latency": 6684.999512301551,
+      "conclusion_rate": 0.8888888888888888
+    },
+    {
+      "family": "counting",
+      "n": 180,
+      "mean_risk": 0.4179246538763743,
+      "mean_steps": 11.094444444444445,
+      "mean_structure": 0.8305555555555556,
+      "mean_coherence": 0.3335951366916958,
+      "mean_latency": 6993.922656112247,
+      "conclusion_rate": 0.5777777777777777
+    },
+    {
+      "family": "causal",
+      "n": 36,
+      "mean_risk": 0.4874411602972921,
+      "mean_steps": 10.083333333333334,
+      "mean_structure": 0.6000000000000001,
+      "mean_coherence": 0.42511767940541595,
+      "mean_latency": 7764.862113528781,
+      "conclusion_rate": 0.0
+    },
+    {
+      "family": "inductive",
+      "n": 36,
+      "mean_risk": 0.5986111111111112,
+      "mean_steps": 1.0277777777777777,
+      "mean_structure": 0.5027777777777778,
+      "mean_coherence": 0.3000000000000001,
+      "mean_latency": 1905.585765838623,
+      "conclusion_rate": 1.0
+    }
+  ],
+  "provider_comparison": {
+    "anthropic/claude-3-7-sonnet-latest": {
+      "n": 540,
+      "mean_risk": 0.22028344270006922,
+      "mean_steps": 6.590740740740741,
+      "mean_structure": 0.812962962962963,
+      "mean_coherence": 0.7464701516368986,
+      "mean_latency": 4311.018621038507
+    },
+    "openai/gpt-4o": {
+      "n": 540,
+      "mean_risk": 0.26760810169863397,
+      "mean_steps": 7.996296296296296,
+      "mean_structure": 0.6648148148148149,
+      "mean_coherence": 0.7999689817879173,
+      "mean_latency": 5303.626661388962
+    }
+  },
+  "overall_summary": {
+    "mean_local_risk": 0.2439457721993516,
+    "mean_step_count": 7.2935185185185185,
+    "error_count": 0
+  }
+}

@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering
+\caption{Formula A (Cognitive Load Correlation) - Results Summary. Mean AE-1r scores increase monotonically with cognitive complexity, demonstrating strong correlation (Spearman $\rho = 0.707$, $p < 10^{-5}$).}
+\label{tab:formula_a_results}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Complexity} & \textbf{N} & \textbf{Mean Score} & \textbf{Std Dev} & \textbf{Median} & \textbf{Latency (ms)} & \textbf{Dominant State} \\
+\textbf{Bin} & & & & & & \\
+\midrule
+Very Low & 144 & 0.1605 & 0.1278 & 0.1196 & 979 & SATISFIED \\
+Low & 144 & 0.2763 & 0.1325 & 0.2875 & 1825 & CONCERNED \\
+Medium & 198 & 0.4427 & 0.0757 & 0.4443 & 4598 & CONCERNED \\
+High & 234 & 0.4995 & 0.1609 & 0.5775 & 10570 & DISTRESSED \\
+\midrule
+\multicolumn{7}{l}{\textbf{Statistical Tests:}} \\
+\multicolumn{7}{l}{Spearman $\rho = 0.707$ (CI: [0.656, 0.750], $p < 10^{-5}$)} \\
+\multicolumn{7}{l}{Kendall $\tau = 0.585$ (CI: [0.542, 0.624], $p < 10^{-5}$)} \\
+\multicolumn{7}{l}{Jonckheere-Terpstra test: $p < 10^{-5}$ (monotonic trend confirmed)} \\
+\bottomrule
+\end{tabular}
+\end{table}
